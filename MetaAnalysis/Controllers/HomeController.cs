@@ -1,19 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-
-namespace MetaAnalysis.Controllers
+namespace CheeseMVC.Controllers
 {
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            Dictionary<string, string> actionChoices = new Dictionary<string, string>();
-            actionChoices.Add("search", "Search");
-            actionChoices.Add("list", "List");
+            return View();
+        }
 
-            ViewBag.actions = actionChoices;
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
 
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult Error()
+        {
             return View();
         }
     }

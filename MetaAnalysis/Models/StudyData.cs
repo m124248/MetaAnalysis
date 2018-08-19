@@ -13,49 +13,35 @@ namespace MetaAnalysis.Models
         public static List<Dictionary<string, string>> FindAll()
         {
             LoadData();
-
-            // Bonus mission: return a copy
             return new List<Dictionary<string, string>>(AllStudies);
         }
 
-        /*
-         * Returns a list of all values contained in a given column,
-         * without duplicates. 
-         */
         public static List<string> FindAll(string column)
         {
             LoadData();
-
             List<string> values = new List<string>();
 
             foreach (Dictionary<string, string> study in AllStudies)
             {
                 string aValue = study[column];
-
                 if (!values.Contains(aValue))
                 {
                     values.Add(aValue);
                 }
             }
-
-            // Bonus mission: sort results alphabetically
+            //sort results alphabetically
             values.Sort();
             return values;
         }
 
-        /**
-         * Search all columns for the given term
-         */
+
         public static List<Dictionary<string, string>> FindByValue(string value)
         {
-            // load data, if not already loaded
             LoadData();
-
             List<Dictionary<string, string>> studies = new List<Dictionary<string, string>>();
 
             foreach (Dictionary<string, string> row in AllStudies)
             {
-
                 foreach (string key in row.Keys)
                 {
                     string aValue = row[key];
@@ -63,26 +49,15 @@ namespace MetaAnalysis.Models
                     if (aValue.ToLower().Contains(value.ToLower()))
                     {
                         studies.Add(row);
-
-                        // Finding one field in a study that matches is sufficient
                         break;
                     }
                 }
             }
-
             return studies;
         }
 
-        /**
-         * Returns results of search the studiess data by key/value, using
-         * inclusion of the search term.
-         *
-         * FROM TECHJOBS: For example, searching for employer "Enterprise" will include results
-         * with "Enterprise Holdings, Inc".
-         */
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
-            // load data, if not already loaded
             LoadData();
 
             List<Dictionary<string, string>> studies = new List<Dictionary<string, string>>();
@@ -96,16 +71,11 @@ namespace MetaAnalysis.Models
                     studies.Add(row);
                 }
             }
-
             return studies;
         }
 
-        /*
-         * Load and parse data from dat_mes.csv
-         */
         private static void LoadData()
         {
-
             if (IsDataLoaded)
             {
                 return;
@@ -129,7 +99,6 @@ namespace MetaAnalysis.Models
             string[] headers = rows[0];
             rows.Remove(headers);
 
-            // Parse each row array into a more friendly Dictionary
             foreach (string[] row in rows)
             {
                 Dictionary<string, string> rowDict = new Dictionary<string, string>();
@@ -140,20 +109,15 @@ namespace MetaAnalysis.Models
                 }
                 AllStudies.Add(rowDict);
             }
-
             IsDataLoaded = true;
         }
 
-        /*
-         * Parse a single line of a CSV file into a string array
-         */
         private static string[] CSVRowToStringArray(string row, char fieldSeparator = ',', char stringSeparator = '\"')
         {
             bool isBetweenQuotes = false;
             StringBuilder valueBuilder = new StringBuilder();
             List<string> rowValues = new List<string>();
 
-            // Loop through the row string one char at a time
             foreach (char c in row.ToCharArray())
             {
                 if ((c == fieldSeparator && !isBetweenQuotes))
@@ -173,8 +137,6 @@ namespace MetaAnalysis.Models
                     }
                 }
             }
-
-            // Add the final value
             rowValues.Add(valueBuilder.ToString());
             valueBuilder.Clear();
 
@@ -182,4 +144,3 @@ namespace MetaAnalysis.Models
         }
     }
 }
-

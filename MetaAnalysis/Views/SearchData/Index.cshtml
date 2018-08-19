@@ -1,4 +1,9 @@
-﻿<h1>@ViewBag.title</h1>
+﻿
+
+@*TODO: FIX THIS PAGE SO THAT THE STUDY DATA MODEL PASSES THROUGH*@
+
+
+<h1>@ViewBag.title</h1>
 
 <form action="/Search/Results">
     <h2>Search by:</h2>
@@ -32,7 +37,6 @@
 
     <h3>@ViewBag.studies.Count Result(s)</h3>
 
-    // TODO #2 - Loop over studies dictionary and display all study fields
     @foreach (Dictionary<string, string> study in ViewBag.studies)
     {
         <table class="study-listing">

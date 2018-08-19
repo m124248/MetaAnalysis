@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using MetaAnalysis.Models;
 
-
 namespace MetaAnalysis.Controllers
 {
-    public class ListController : Controller
+    public class SerachDataController : Controller
     {
         internal static Dictionary<string, string> columnChoices = new Dictionary<string, string>();
 
-        // This is a "static constructor" which can be used
-        // to initialize static members of a class
-        static ListController()
+        static SerachDataController()
         {
             columnChoices.Add("id", "ID");
             columnChoices.Add("PublicationYear", "Publication Year");
@@ -54,7 +50,7 @@ namespace MetaAnalysis.Controllers
 
         public IActionResult Studies(string column, string value)
         {
-            List<Dictionary<String, String>> studies = StudyData.FindByColumnAndValue(column, value);
+            List<Dictionary<string, string>> studies = StudyData.FindByColumnAndValue(column, value);
             ViewBag.title = "Studies with " + columnChoices[column] + ": " + value;
             ViewBag.studies = studies;
 
