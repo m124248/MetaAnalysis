@@ -6,7 +6,7 @@ using MetaAnalysis.Models;
 
 namespace MetaAnalysis.Controllers
 {
-    public class StudyDataTableController : Controller
+    public class TableController : Controller
     {
         public IActionResult Index()
         {

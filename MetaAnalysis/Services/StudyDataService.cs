@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace MetaAnalysis.Models
+namespace MetaAnalysis.Services
 {
-    public class StudyData
+    public class StudyDataService
     {
         static List<Dictionary<string, string>> AllStudies = new List<Dictionary<string, string>>();
         static bool IsDataLoaded = false;
@@ -141,6 +142,30 @@ namespace MetaAnalysis.Models
             valueBuilder.Clear();
 
             return rowValues.ToArray();
+        }
+
+        public static DataTable ConvertCSVtoDataTable(string strFilePath)
+        {
+            DataTable dt = new DataTable();
+            using (StreamReader sr = new StreamReader(strFilePath))
+            {
+                string[] headers = sr.ReadLine().Split(',');
+                foreach (string header in headers)
+                {
+                    dt.Columns.Add(header);
+                }
+                while (!sr.EndOfStream)
+                {
+                    string[] rows = sr.ReadLine().Split(',');
+                    DataRow dr = dt.NewRow();
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        dr[i] = rows[i];
+                    }
+                    dt.Rows.Add(dr);
+                }
+            }
+            return dt;
         }
     }
 }
