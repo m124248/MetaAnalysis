@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using MetaAnalysis.Models;
+using MetaAnalysis.ViewModels;
 using MetaAnalysis.Services;
 using System.Linq;
 

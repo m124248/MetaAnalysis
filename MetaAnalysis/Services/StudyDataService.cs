@@ -1,47 +1,49 @@
-﻿using System.Collections.Generic;
+﻿using MetaAnalysis.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Linq;
 
 namespace MetaAnalysis.Services
 {
     public class StudyDataService
     {
-        static List<Dictionary<string, string>> AllStudies = new List<Dictionary<string, string>>();
+        static List<Study> AllStudies = new List<Study>();
         static bool IsDataLoaded = false;
 
-        public static List<Dictionary<string, string>> FindAll()
+        public static List<Study> FindAll()
         {
             LoadData();
-            return new List<Dictionary<string, string>>(AllStudies);
+            return new List<Study>(AllStudies);
         }
 
-        public static List<string> FindAll(string column)
+        public static List<object> FindAll(string column)
         {
             LoadData();
-            List<string> values = new List<string>();
+            List<object> values = new List<object>();
 
-            foreach (Dictionary<string, string> study in AllStudies)
+            var StudyColumn = typeof(Study).GetProperties();
+
+            foreach (Study study in AllStudies)
             {
-                string aValue = study[column];
+                object aValue = StudyColumn.Where(t => t.PropertyType.Name==column).Select(t => t.GetValue(study));
                 if (!values.Contains(aValue))
                 {
                     values.Add(aValue);
                 }
             }
-            //sort results alphabetically
-            values.Sort();
             return values;
         }
 
-
-        public static List<Dictionary<string, string>> FindByValue(string value)
+        //THIS IS WHERE I LEFT OFF
+        public static List<Study> FindByValue(string value)
         {
             LoadData();
-            List<Dictionary<string, string>> studies = new List<Dictionary<string, string>>();
+            List<Study> studies = new List<Study>();
 
-            foreach (Dictionary<string, string> row in AllStudies)
+            foreach (Study row in AllStudies)
             {
                 foreach (string key in row.Keys)
                 {
@@ -57,13 +59,13 @@ namespace MetaAnalysis.Services
             return studies;
         }
 
-        public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
+        public static List<Study> FindByColumnAndValue(string column, string value)
         {
             LoadData();
 
-            List<Dictionary<string, string>> studies = new List<Dictionary<string, string>>();
+            List<Study> studies = new List<Study>();
 
-            foreach (Dictionary<string, string> row in AllStudies)
+            foreach (Study row in AllStudies)
             {
                 string aValue = row[column];
 

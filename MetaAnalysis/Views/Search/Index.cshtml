@@ -1,6 +1,4 @@
-﻿@model SearchViewModel
-
-@*TODO: FIX THIS PAGE SO THAT THE STUDY DATA MODEL PASSES THROUGH*@
+﻿@model MetaAnalysis.ViewModels.SearchViewModel
 
 
 <h1>@ViewBag.title</h1>
@@ -32,23 +30,31 @@
 
 <hr />
 
-@if (ViewBag.studies != null)
+@if (Model.Studies != null)
 {
 
-    <h3>@ViewBag.studies.Count Result(s)</h3>
+    <h3> Result(s)</h3>
 
-    @foreach (Dictionary<string, string> study in ViewBag.studies)
+    @foreach (var study in Model.Studies)
     {
         <table class="study-listing">
-            @foreach (KeyValuePair<string, string> study_fields in study)
-            {
-                <tr>
-                    <td>@study_fields.Key</td>
-                    <td>@study_fields.Value</td>
-                </tr>
+            
+           
+            <tr>
+                <td>@study.Id</td>
+                <td>@study.PublicationYear</td>
+                <td>@study.N</td>
+                <td>@study.R</td>
+                <td>@study.VariablesControlled</td>
+                <td>@study.StudyDesign</td>
+                <td>@study.AdherenceMeasure</td>
+                <td>@study.ConscientiousnessMeasure</td>
+                <td>@study.MeanAge</td>
+                <td>@study.MethodologicalQuality</td>
+            </tr>
 
-            }
+            
         </table>
-
+      
     }
 }
