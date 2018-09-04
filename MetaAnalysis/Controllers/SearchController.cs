@@ -18,12 +18,12 @@ namespace MetaAnalysis.Controllers
             choices.ColumnChoices.Add("PublicationYear", "Publication Year");
             choices.ColumnChoices.Add("n", "Correlation Coefficient");
             choices.ColumnChoices.Add("r", "Sample Size");
-            choices.ColumnChoices.Add("Variables controlled", "Variables Controlled");
-            choices.ColumnChoices.Add("Study design", "Study Design");
-            choices.ColumnChoices.Add("Adherence measure", "Adherence Measure");
-            choices.ColumnChoices.Add("Conscientiousness measure", "Conscientiousness Measure");
-            choices.ColumnChoices.Add("Mean age", "Mean Age");
-            choices.ColumnChoices.Add("Methodological quality", "Methodological Quality");
+            choices.ColumnChoices.Add("VariablesControlled", "Variables Controlled");
+            choices.ColumnChoices.Add("StudyDesign", "Study Design");
+            choices.ColumnChoices.Add("AdherenceMeasure", "Adherence Measure");
+            choices.ColumnChoices.Add("ConscientiousnessMeasure", "Conscientiousness Measure");
+            choices.ColumnChoices.Add("MeanAge", "Mean Age");
+            choices.ColumnChoices.Add("MethodologicalQuality", "Methodological Quality");
             choices.ColumnChoices.Add("all", "All");
 
 
@@ -34,14 +34,14 @@ namespace MetaAnalysis.Controllers
         {
             if (column.Equals("all"))
             {
-                List<Dictionary<string, string>> studies = StudyDataService.FindAll();
+                Model.Studies = StudyDataService.FindAll();
                 ViewBag.title = "All Studies";
-                ViewBag.studies = studies;
+
                 return View("Studies");
             }
             else
             {
-                List<string> items = StudyDataService.FindAll(column);
+                IEnumerable<string> items = StudyDataService.FindAll(column);
                 ViewBag.title = "All " + Model.ColumnChoices[column] + " Values";
                 ViewBag.column = column;
                 ViewBag.items = items;

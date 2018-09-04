@@ -19,55 +19,49 @@ namespace MetaAnalysis.Services
             return new List<Study>(AllStudies);
         }
 
-        public static List<object> FindAll(string column)
+        public static IEnumerable<string> FindAll(string column)
         {
             LoadData();
-            List<object> values = new List<object>();
+            List<string> values = new List<string>();
 
-            var StudyColumn = typeof(Study).GetProperties();
+            var StudyColumn = typeof(Study).GetProperties().Where(t => t.Name == column).First();
 
-            foreach (Study study in AllStudies)
-            {
-                object aValue = StudyColumn.Where(t => t.PropertyType.Name==column).Select(t => t.GetValue(study));
-                if (!values.Contains(aValue))
-                {
-                    values.Add(aValue);
-                }
-            }
-            return values;
+            return AllStudies.Select(t => (string)StudyColumn.GetValue(t));
+            
         }
 
-        //THIS IS WHERE I LEFT OFF
+        
         public static List<Study> FindByValue(string value)
         {
             LoadData();
+            var StudyColumns = typeof(Study).GetProperties();
+
             List<Study> studies = new List<Study>();
 
-            foreach (Study row in AllStudies)
+            foreach (var study in AllStudies)
             {
-                foreach (string key in row.Keys)
+                foreach (var column in StudyColumns)
                 {
-                    string aValue = row[key];
-
-                    if (aValue.ToLower().Contains(value.ToLower()))
+                    if (column.GetValue(study).ToLower() == value.ToLower())
                     {
-                        studies.Add(row);
+                        studies.Add(study);
                         break;
                     }
                 }
             }
-            return studies;
+
+           return studies;
         }
 
         public static List<Study> FindByColumnAndValue(string column, string value)
         {
             LoadData();
-
+            var StudyColumn = typeof(Study).GetProperties().Where(t => t.Name == column).First();
             List<Study> studies = new List<Study>();
 
             foreach (Study row in AllStudies)
             {
-                string aValue = row[column];
+                string aValue = (string)StudyColumn.GetValue(row);
 
                 if (aValue.ToLower().Contains(value.ToLower()))
                 {
@@ -101,7 +95,7 @@ namespace MetaAnalysis.Services
 
             string[] headers = rows[0];
             rows.Remove(headers);
-
+            //9/3 LEFT OFF HERE
             foreach (string[] row in rows)
             {
                 Dictionary<string, string> rowDict = new Dictionary<string, string>();

@@ -1,4 +1,4 @@
-id,Publication Year,n,r,Variables controlled,Study design,Adherence measure,Conscientiousness measure ,Mean age,Methodological quality
+id,PublicationYear,n,r,VariablesControlled,StudyDesign,AdherenceMeasure,ConscientiousnessMeasure ,MeanAge,MethodologicalQuality
 Axelsson et al.,2009,109,0.187,none,crossSectional,selfReport,other,22,1
 Axelsson et al.,2011,749,0.162,none,crossSectional,selfReport,NEO,53.59,1
 Axelsson et al.,2010,55,0.34,none,prospective,other,NEO,43.36,2

@@ -8,15 +8,15 @@ namespace MetaAnalysis.Models
     public class Study
     {
         public string Id { get; set; }
-        public int PublicationYear { get; set; }
-        public int N { get; set; }
-        public float R { get; set; }
+        public string PublicationYear { get; set; }
+        public string N { get; set; }
+        public string R { get; set; }
         public string VariablesControlled { get; set; }
         public string StudyDesign { get; set; }
         public string AdherenceMeasure { get; set; }
         public string ConscientiousnessMeasure { get; set; }
-        public float MeanAge { get; set; }
-        public int MethodologicalQuality { get; set; }
+        public string MeanAge { get; set; }
+        public string MethodologicalQuality { get; set; }
 
     }
 
