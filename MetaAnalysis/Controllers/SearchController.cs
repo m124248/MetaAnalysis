@@ -8,12 +8,8 @@ namespace MetaAnalysis.Controllers
 {
     public class SearchController : Controller
     {
-    
-
-        public IActionResult Index()
+        private void LoadChoices(SearchViewModel choices)
         {
-            SearchViewModel choices = new SearchViewModel();
-
             choices.ColumnChoices.Add("id", "ID");
             choices.ColumnChoices.Add("PublicationYear", "Publication Year");
             choices.ColumnChoices.Add("n", "Correlation Coefficient");
@@ -25,37 +21,42 @@ namespace MetaAnalysis.Controllers
             choices.ColumnChoices.Add("MeanAge", "Mean Age");
             choices.ColumnChoices.Add("MethodologicalQuality", "Methodological Quality");
             choices.ColumnChoices.Add("all", "All");
+        }
+
+        public IActionResult Index()
+        {
+            SearchViewModel choices = new SearchViewModel();
+
+            LoadChoices(choices);
 
 
             return View(choices);
         }
 
-        public IActionResult Values(string column, SearchViewModel Model)
+        public IActionResult Results (string column, string value)
         {
-            if (column.Equals("all"))
+            var Model = new SearchViewModel();
+            LoadChoices(Model);
+            if (column == "all" && string.IsNullOrWhiteSpace(value))
             {
-                Model.Studies = StudyDataService.FindAll();
+                List<Dictionary<string, string>> studies = StudyDataService.FindAll();
                 ViewBag.title = "All Studies";
-
-                return View("Studies");
+                Model.Studies = studies;
             }
-            else
+            else if(column != "all" && string.IsNullOrWhiteSpace(value))
             {
-                IEnumerable<string> items = StudyDataService.FindAll(column);
+                List<string> items = StudyDataService.FindAll(column);
                 ViewBag.title = "All " + Model.ColumnChoices[column] + " Values";
                 ViewBag.column = column;
-                ViewBag.items = items;
-                return View();
+                Model.ColumnValues = items;
             }
-        }
-
-        public IActionResult Studies(string column, string value, SearchViewModel Model)
-        {
-            List<Dictionary<string, string>> studies = StudyDataService.FindByColumnAndValue(column, value);
-            ViewBag.title = "Studies with " + Model.ColumnChoices[column] + ": " + value;
-            ViewBag.studies = studies;
-
-            return View();
+            //else
+            //{
+            //    List<string> items = StudyDataService.FindByColumnAndValue(column, value);
+            //    ViewBag.title = "Studies with " + Model.ColumnChoices[column] + ": " + value;
+            //    ViewBag.studies = studies;
+            //}
+            return View("Index", Model);
         }
     }
 }

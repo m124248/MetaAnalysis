@@ -10,41 +10,47 @@ namespace MetaAnalysis.Services
 {
     public class StudyDataService
     {
-        static List<Study> AllStudies = new List<Study>();
+        static List<Dictionary<string, string>> AllStudies = new List<Dictionary<string, string>>();
         static bool IsDataLoaded = false;
 
-        public static List<Study> FindAll()
+        public static List<Dictionary<string, string>> FindAll()
         {
             LoadData();
-            return new List<Study>(AllStudies);
+            return new List<Dictionary<string, string>>(AllStudies);
         }
 
-        public static IEnumerable<string> FindAll(string column)
+        public static List<string> FindAll(string column)
         {
             LoadData();
             List<string> values = new List<string>();
 
-            var StudyColumn = typeof(Study).GetProperties().Where(t => t.Name == column).First();
+            foreach (Dictionary<string, string> study in AllStudies)
+            { 
+            string aValue = study[column];
+            if (!values.Contains(aValue))
+                {
+                    values.Add(aValue);
+                }
+             }
+            return values;
 
-            return AllStudies.Select(t => (string)StudyColumn.GetValue(t));
-            
         }
 
         
-        public static List<Study> FindByValue(string value)
+        public static List<Dictionary<string, string>> FindByValue(string value)
         {
             LoadData();
-            var StudyColumns = typeof(Study).GetProperties();
+            List<Dictionary<string, string>> studies = new List<Dictionary<string, string>>();
 
-            List<Study> studies = new List<Study>();
-
-            foreach (var study in AllStudies)
+            foreach (Dictionary<string, string> row in AllStudies)
             {
-                foreach (var column in StudyColumns)
+                foreach (string key in row.Keys)
                 {
-                    if (column.GetValue(study).ToLower() == value.ToLower())
+                    string aValue = row[key];
+
+                    if (aValue.ToLower().Contains(value.ToLower()))
                     {
-                        studies.Add(study);
+                        studies.Add(row);
                         break;
                     }
                 }
@@ -53,15 +59,15 @@ namespace MetaAnalysis.Services
            return studies;
         }
 
-        public static List<Study> FindByColumnAndValue(string column, string value)
+        public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
             LoadData();
-            var StudyColumn = typeof(Study).GetProperties().Where(t => t.Name == column).First();
-            List<Study> studies = new List<Study>();
 
-            foreach (Study row in AllStudies)
+            List<Dictionary<string, string>> studies = new List<Dictionary<string, string>>();
+
+            foreach (Dictionary<string, string> row in AllStudies)
             {
-                string aValue = (string)StudyColumn.GetValue(row);
+                string aValue = row[column];
 
                 if (aValue.ToLower().Contains(value.ToLower()))
                 {

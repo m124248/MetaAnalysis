@@ -11,7 +11,7 @@
         {
             <span>
                 <input type="radio"
-                       name="searchType"
+                       name="column"
                        id="@column.Key"
                        value="@column.Key"
                        checked="@column.Key == 'all''" />
@@ -22,7 +22,7 @@
 
     <p>
         <label for="searchTerm">Keyword:</label>
-        <input type="text" name="searchTerm" id="searchTerm" />
+        <input type="text" name="value" id="searchTerm" />
     </p>
 
     <input type="submit" value="Search" />
@@ -35,22 +35,18 @@
 
     <h3> Result(s)</h3>
 
-    @foreach (var study in Model.Studies)
+    @foreach (Dictionary<string, string> item in Model.Studies) 
     {
         <table class="study-listing">
-            
+
            
             <tr>
-                <td>@study.Id</td>
-                <td>@study.PublicationYear</td>
-                <td>@study.N</td>
-                <td>@study.R</td>
-                <td>@study.VariablesControlled</td>
-                <td>@study.StudyDesign</td>
-                <td>@study.AdherenceMeasure</td>
-                <td>@study.ConscientiousnessMeasure</td>
-                <td>@study.MeanAge</td>
-                <td>@study.MethodologicalQuality</td>
+                @foreach (KeyValuePair<string, string> pair in item)
+                {
+                    <td>@pair.Value</td>
+
+                }
+
             </tr>
 
             
