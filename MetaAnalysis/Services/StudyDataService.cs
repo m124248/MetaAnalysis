@@ -25,18 +25,18 @@ namespace MetaAnalysis.Services
             List<string> values = new List<string>();
 
             foreach (Dictionary<string, string> study in AllStudies)
-            { 
-            string aValue = study[column];
-            if (!values.Contains(aValue))
+            {
+                string aValue = study[column];
+                if (!values.Contains(aValue))
                 {
                     values.Add(aValue);
                 }
-             }
+            }
             return values;
 
         }
 
-        
+
         public static List<Dictionary<string, string>> FindByValue(string value)
         {
             LoadData();
@@ -56,7 +56,7 @@ namespace MetaAnalysis.Services
                 }
             }
 
-           return studies;
+            return studies;
         }
 
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
@@ -149,7 +149,7 @@ namespace MetaAnalysis.Services
         public static DataTable ConvertCSVtoDataTable(string strFilePath)
         {
             DataTable dt = new DataTable();
-            using (StreamReader sr = new StreamReader(strFilePath))
+            using (StreamReader sr = File.OpenText("Models/dat_mes.csv"))
             {
                 string[] headers = sr.ReadLine().Split(',');
                 foreach (string header in headers)
@@ -168,6 +168,7 @@ namespace MetaAnalysis.Services
                 }
             }
             return dt;
+
         }
     }
 }

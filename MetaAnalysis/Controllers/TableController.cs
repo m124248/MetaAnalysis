@@ -12,5 +12,13 @@ namespace MetaAnalysis.Controllers
         {
             return View();
         }
+     
     }
 }
+
+/*
+    public IActionResult Index()
+    {
+        var allCategories = context.Categories.ToList();
+        return View(allCategories);
+    }*/
