@@ -1,7 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Home";
 }
-
-<div>
-    <p>HomePage with Explanation of Website's Features</p>
-</div>
+<p>View studies by:</p>
+<ul>
+    @foreach (KeyValuePair<string, string> action in ViewBag.actions)
+    {
+        <li><a href="/@action.Key">@action.Value</a></li>
+    }
+</ul>

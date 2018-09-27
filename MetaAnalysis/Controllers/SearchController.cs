@@ -1,62 +1,45 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using MetaAnalysis.Models;
+using MetaAnalysis.Data;
 using MetaAnalysis.ViewModels;
-using MetaAnalysis.Services;
-using System.Linq;
 
 namespace MetaAnalysis.Controllers
 {
     public class SearchController : Controller
     {
-        private void LoadChoices(SearchViewModel choices)
+
+        // Our reference to the data store
+        private static StudyData studyData;
+
+        static SearchController()
         {
-            choices.ColumnChoices.Add("id", "ID");
-            choices.ColumnChoices.Add("PublicationYear", "Publication Year");
-            choices.ColumnChoices.Add("n", "Correlation Coefficient");
-            choices.ColumnChoices.Add("r", "Sample Size");
-            choices.ColumnChoices.Add("VariablesControlled", "Variables Controlled");
-            choices.ColumnChoices.Add("StudyDesign", "Study Design");
-            choices.ColumnChoices.Add("AdherenceMeasure", "Adherence Measure");
-            choices.ColumnChoices.Add("ConscientiousnessMeasure", "Conscientiousness Measure");
-            choices.ColumnChoices.Add("MeanAge", "Mean Age");
-            choices.ColumnChoices.Add("MethodologicalQuality", "Methodological Quality");
-            choices.ColumnChoices.Add("all", "All");
+            studyData = StudyData.GetInstance();
         }
 
+        // Display the search form
         public IActionResult Index()
         {
-            SearchViewModel choices = new SearchViewModel();
-
-            LoadChoices(choices);
-
-
-            return View(choices);
+            SearchStudiesViewModel studiesViewModel = new SearchStudiesViewModel();
+            studiesViewModel.Title = "Search";
+            return View(studiesViewModel);
         }
 
-        public IActionResult Results (string column, string value)
+        // Process search submission and display search results
+        public IActionResult Results(SearchStudiesViewModel studiesViewModel)
         {
-            var Model = new SearchViewModel();
-            LoadChoices(Model);
-            if (column == "all" && string.IsNullOrWhiteSpace(value))
+
+            if (studiesViewModel.Column.Equals(StudyFieldType.All) || studiesViewModel.Value.Equals(""))
             {
-                List<Dictionary<string, string>> studies = StudyDataService.FindAll();
-                ViewBag.title = "All Studies";
-                Model.Studies = studies;
+                studiesViewModel.Studies = studyData.FindByValue(studiesViewModel.Value);
             }
-            else if(column != "all" && string.IsNullOrWhiteSpace(value))
+            else
             {
-                List<string> items = StudyDataService.FindAll(column);
-                ViewBag.title = "All " + Model.ColumnChoices[column] + " Values";
-                ViewBag.column = column;
-                Model.ColumnValues = items;
+                studiesViewModel.Studies = studyData.FindByColumnAndValue(studiesViewModel.Column, studiesViewModel.Value);
             }
-            //else
-            //{
-            //    List<string> items = StudyDataService.FindByColumnAndValue(column, value);
-            //    ViewBag.title = "Studies with " + Model.ColumnChoices[column] + ": " + value;
-            //    ViewBag.studies = studies;
-            //}
-            return View("Index", Model);
+
+            studiesViewModel.Title = "Search";
+
+            return View("Index", studiesViewModel);
         }
     }
 }

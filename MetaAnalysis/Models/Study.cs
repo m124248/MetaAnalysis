@@ -7,17 +7,25 @@ namespace MetaAnalysis.Models
 {
     public class Study
     {
+        public int ID { get; set; }
+        private static int nextId = 1;
+
         public string Id { get; set; }
-        public string PublicationYear { get; set; }
-        public string N { get; set; }
-        public string R { get; set; }
-        public string VariablesControlled { get; set; }
-        public string StudyDesign { get; set; }
-        public string AdherenceMeasure { get; set; }
-        public string ConscientiousnessMeasure { get; set; }
-        public string MeanAge { get; set; }
-        public string MethodologicalQuality { get; set; }
+        public PublicationYear PublicationYear { get; set; }
+        public CorrelationCoefficient CorrelationCoefficient { get; set; }
+        public SampleSize SampleSize { get; set; }
+        public VariablesControlled VariablesControlled { get; set; }
+        public StudyDesign StudyDesign { get; set; }
+        public AdherenceMeasure AdherenceMeasure { get; set; }
+        public ConscientiousnessMeasure ConscientiousnessMeasure { get; set; }
+        public MeanAge MeanAge { get; set; }
+        public MethodologicalQuality MethodologicalQuality { get; set; }
 
+        public Study()
+        {
+            ID = nextId;
+            nextId++;
+        }
     }
-
 }
+

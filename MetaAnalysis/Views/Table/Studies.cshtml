@@ -1,0 +1,55 @@
+﻿@model MetaAnalysis.ViewModels.SearchStudiesViewModel
+
+<h1>@Model.Title</h1>
+
+@if (Model.Studies != null)
+{
+
+    <h3>@Model.Studies.Count Result(s)</h3>
+
+    @foreach (var study in Model.Studies)
+    {
+    <table class="study-listing">
+        <tr>
+            <td>ID</td>
+            <td>@study.ID</td>
+        </tr>
+        <tr>
+            <td>Publication Year</td>
+            <td>@study.PublicationYear</td>
+        </tr>
+        <tr>
+            <td>Correlation Coefficient</td>
+            <td>@study.CorrelationCoefficient</td>
+        </tr>
+        <tr>
+            <td>Sample Size</td>
+            <td>@study.SampleSize</td>
+        </tr>
+        <tr>
+            <td>Variables Controlled</td>
+            <td>@study.VariablesControlled</td>
+        </tr>
+        <tr>
+            <td>Study Design</td>
+            <td>@study.StudyDesign</td>
+        </tr>
+        <tr>
+            <td>Adherence Measure</td>
+            <td>@study.AdherenceMeasure</td>
+        </tr>
+        <tr>
+            <td>Conscientiousness Measure</td>
+            <td>@study.ConscientiousnessMeasure</td>
+        </tr>
+        <tr>
+            <td>Mean Age</td>
+            <td>@study.MeanAge</td>
+        </tr>
+        <tr>
+            <td>Methodological Quality</td>
+            <td>@study.MethodologicalQuality</td>
+        </tr>
+    </table>
+    }
+}

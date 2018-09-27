@@ -1,31 +1,11 @@
-﻿@model MetaAnalysis.ViewModels.TableViewModel
+﻿@model MetaAnalysis.ViewModels.StudyFieldsViewModel
 
-@{
-    ViewBag.Title = "Index";
-}
-<div><b>Table Format Data Displaying in ForEach</b><br /></div>
-@foreach (KeyValuePair<string, string> table in Model.Table)
+<h1>@Model.Title</h1>
+<ul>
+    @foreach (var column in Model.Columns)
     {
-    <table class="table table-bordered table-responsive table-hover">
-    <tr>
-        <th>ID </th>
-        <th>Publication Year </th>
-        <th>Correlation Coefficient </th>
-        <th>Sample Size</th>
-        <th>Variables Controlled</th>
-        <th>Study Design</th>
-        <th>Adherence Measure</th>
-        <th>Conscientiousness Measure</th>
-        <th>Mean Age</th>
-        <th>Methodological Quality</th>
-    </tr>
-    <tr>
-        @foreach (KeyValuePair<string, string> pair in table) //Sept 16 LEFT OFF
-        {
-            <td>@pair.Value</td>
-
-        }
-
-    </tr>
-    </table>
-}
+        <li>
+            <a asp-controller="List" asp-action="Values" asp-route-column="@column">@column</a>
+        </li>
+    }
+</ul>
