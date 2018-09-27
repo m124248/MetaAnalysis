@@ -13,7 +13,7 @@ namespace MetaAnalysis.Controllers
         {
             Dictionary<string, string> actionChoices = new Dictionary<string, string>();
             actionChoices.Add("search", "Search");
-            actionChoices.Add("list", "List");
+            actionChoices.Add("table", "Table");
 
             ViewBag.actions = actionChoices;
 
