@@ -1,3 +1,31 @@
-﻿@model MetaAnalysis.ViewModels.TableStudiesViewModel
+﻿@using System.Data
+@model MetaAnalysis.ViewModels.TableStudiesViewModel
 
 <h1>@Model.Title</h1>
+
+<table>
+
+    <tr>
+        <th>Id</th>
+        <th>Publication Year</th>
+        <th>Correlation Coefficient</th>
+        <th>Sample Size</th>
+        <th>Variables Controlled</th>
+        <th>Study Design</th>
+        <th>Adherence Measure</th>
+        <th>Conscientiousness Measure</th>
+        <th>Mean Age</th>
+        <th>Methodological Quality</th>
+    </tr>
+
+        @foreach(DataRow row in Model.TableStudies.Rows)
+        {
+            <tr>
+            @foreach(var column in row.ItemArray)
+            {
+                <td>@column</td>
+
+            }
+            </tr>
+        }
+</table>

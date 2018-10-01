@@ -20,10 +20,13 @@ namespace MetaAnalysis.Controllers
         // Lists options for browsing, by "column"
         public IActionResult Index()
         {
-            StudyFieldsViewModel studyFieldsViewModel = new StudyFieldsViewModel();
-            studyFieldsViewModel.Title = "View Study Fields";
+            TableStudiesViewModel tableStudiesViewModel = new TableStudiesViewModel
+            {
+                Title = "Meta Analysis Data Table",
+                TableStudies = StudyDataImporter.ConvertCSVtoDataTable()
+            };
 
-            return View(studyFieldsViewModel);
+            return View(tableStudiesViewModel);
         }
 
         // Lists the values of a given column, or all studiess if selected

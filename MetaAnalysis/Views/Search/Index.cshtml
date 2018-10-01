@@ -6,14 +6,14 @@
     <p>
         @foreach (var column in Model.Columns)
         {
-            var checkedColumn = column.Equals(Model.Column);
+            var checkedColumn = column.Equals(Model.Column) ? "checked" : "";
 
             <span>
                 <input type="radio"
                        name="Column"
                        id="@column"
                        value="@column"
-                       checked="@checkedColumn" />
+                       @checkedColumn />
                 <label for="@column">@column</label>
             </span>
         }
