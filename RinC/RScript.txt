@@ -12,6 +12,12 @@
 ## Install and load packages ##
 ###############################
 
+# Added 10/13, arguments passed from C# program
+
+args <- commandArgs()
+riskValueFilepath <- args[2]
+VaR <- args[3]
+
 install.packages(c("robumeta", "metafor", "dplyr"))
 
 library("robumeta")
