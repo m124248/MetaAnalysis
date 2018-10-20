@@ -8,15 +8,13 @@
 
 # Any updates to the script will be posted to http://github.com/dsquintana/corr_meta
 
+args <- commandArgs()
+metaAnalysisFilepath <- args[2]
+VaR <- args[3]
+
 ###############################
 ## Install and load packages ##
 ###############################
-
-# Added 10/13, arguments passed from C# program
-
-args <- commandArgs()
-riskValueFilepath <- args[2]
-VaR <- args[3]
 
 install.packages(c("robumeta", "metafor", "dplyr"))
 
@@ -38,15 +36,6 @@ dat <- dat %>% select(study_id, authors:quality) # This brings the study id colu
 
 View(dat) 
 
-#########################################################################
-## Skip next section if you're following the analysis in Quintana 2015 ##
-#########################################################################
-
-#You can use a similar procedure to load your own data. However you'll need to use a different command to do this.
-
-#To import your data, follow the instructions below. This will import your data assuming that the file is saved as a csv file in your working directory using the name "yourdata", and that the first row contains variable names. The rest of the guide will use the Molloy et al., 2014 data. If you are using your own data you'll need to replace "dat" file with the name of your dataset.
-
-yourdata <- read.csv("yourdata.csv", header=TRUE)  
 
 ##################################
 ## Performing the Meta-analysis ##
@@ -114,6 +103,7 @@ confint(res)
 b_res <- rma(yi, vi, data=dat, slab=study_id)  # New meta-analysis with study ID identifier  
 
 # The next command will plot a Baujat plot.
+
 
 baujat(b_res)
 

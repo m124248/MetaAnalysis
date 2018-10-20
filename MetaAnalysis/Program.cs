@@ -21,9 +21,8 @@ namespace MetaAnalysis
 
             host.Run();
 
-            var scriptFilePath = "RinC/RScript.txt";
+            var scriptFilePath = "Data/RScript.txt";
             var csvFilePath = "Data/dat_mes.csv";
-            //var valueAtRisk = "25750000000";
             ExecuteScriptFile(scriptFilePath, csvFilePath);
         }
 
