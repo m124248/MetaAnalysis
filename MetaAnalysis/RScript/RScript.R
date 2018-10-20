@@ -34,7 +34,7 @@ dat <- dat %>% select(study_id, authors:quality) # This brings the study id colu
 
 # Take look at the data.
 
-View(dat) 
+View(dat) #DataTable
 
 
 ##################################
@@ -49,14 +49,14 @@ dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat, slab=paste(authors, year, 
 
 # Lets have a look at the file again, notice the two new variables at the end. The "yi" variable is the z score transformation and the "vi" variable is the corresponding estimated sampling variance.
 
-View(dat)
+View(dat) #DataTable
 
 # Now you're ready to perform the meta-analysis using a random-effects model. The following commands will print out the data and also calculates and print the confidence interval for the amount of heterogeneity (I^2).
 
 res <- rma(yi, vi, data=dat) 
 res 
 predict(res, digits=3, transf=transf.ztor)
-confint(res)  
+confint(res)  #DataFrame
 
 # The output provides important information to report the meta-analysis, let's look section-by-section at the relevant data.
 
@@ -105,7 +105,7 @@ b_res <- rma(yi, vi, data=dat, slab=study_id)  # New meta-analysis with study ID
 # The next command will plot a Baujat plot.
 
 
-baujat(b_res)
+baujat(b_res) #BaujatPlot
 
 # Studies that fall to the top right quadrant of the Baujat plot contribute most to both these factors. Looking at the Molloy et al., 2014 data set reveals that 3 studies that contribute to both of these factors. A closer look the characteristics of these studies may reveal moderating variables that may contribute to heterogeneity
 
@@ -134,29 +134,6 @@ regtest(res)
 ranktest(res)
 
 # Neither Egger's regression test (p = 0.3071) or the Rank correlation test (p = 0.3918) was statistically significant so there's no evidence of publication bias according to these tests.
-
-#Trim and fill
-
-# To demonstrate the trim and fill procedure now import a data set removing 3 studies ("dat_bias") with small effect sizes and high standard error. This command will only work if the "dat_bias" file is located in your working directory. If you don't know what your working directory is have a look at the R documentation https://cran.r-project.org/manuals.html (or search online).
-
-dat_bias <- read.csv("dat_bias.csv") 
-View(dat_bias)
-
-res.b <- rma(yi, vi, data=dat_bias) 
-res.b 
-confint(res.b)  
-
-# The next commands will print a funnel plot, perform Egger's regression test and the rank correlation test for the biased dataset.
-
-funnel(res.b, xlab = "Correlation coefficient") 
-regtest(res.b) 
-ranktest(res.b) 
-
-#The trim and fill method imputes “missing” studies to create a more symmetrical funnel plot. 
-
-res.tf <- trimfill(res.b)
-res.tf
-funnel(res.tf, xlab = "Correlation coefficient")
 
 # Moderators (all use a meta-regression model)
 
