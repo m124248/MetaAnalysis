@@ -12,6 +12,7 @@ namespace MetaAnalysis.Helpers
         public static HtmlString LoadHtml(this HtmlHelper html, string file)
         {
             //import html content (file)
+            
             string rawHtml = new WebClient().DownloadString(HttpContext.Current.Server.MapPath(file)).ToString();
             //change CSS class to make it compatible with Bootstrap
             rawHtml = rawHtml.Replace("dataframe", "\'table table-striped table-bordered table-condensed table-hover\'");

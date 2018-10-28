@@ -10,6 +10,7 @@ namespace MetaAnalysis.Controllers
     {
         public IActionResult Index()
         {
+            //something to run RScript
             return View(); 
         }
     }

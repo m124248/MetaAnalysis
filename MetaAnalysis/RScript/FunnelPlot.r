@@ -1,16 +1,24 @@
 ﻿library("robumeta")
 library("metafor")
-library(plyr)
+library("plyr")
 library("dplyr")
-library(R2HTML)
-args <- commandArgs()
-metaAnalysisFilepath <- args[2]
+library("R2HTML")
+#args <- commandArgs()
+#metaAnalysisFilepath <- args[2]
 
-funnel(res, xlab = "Correlation coefficient")
-wd <- getwd()
-imagedir <- paste(Sys.getenv("HOME"), "C:/MetaAnalysis/MetaAnalysis/wwwroot/html/", sep = "")
-setwd(imagedir)
-filename <- 'funnel.png'
+
+filename <- 'C:\\Users\\cluni\\source\\repos\\MetaAnalysis\\MetaAnalysis\\wwwroot\\html\\funnel.png'
 if (file.exists(filename)) file.remove(filename)
-png(funnel, file = filename, width = 9, height = 4)
-setwd(wd)
+#dir.create(dirname(filename), showWarnings = FALSE)
+
+png(file = filename, width = 500, height = 900)
+funnel(res, xlab = "Correlation coefficient")
+dev.off()
+
+#wd <- getwd()
+#imagedir <- paste(Sys.getenv("HOME"), "C:/MetaAnalysis/MetaAnalysis/wwwroot/html/", sep = "")
+#setwd(imagedir)
+
+
+
+#setwd(wd)
