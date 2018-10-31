@@ -1,4 +1,9 @@
-﻿#############################################################################################
+﻿sink()
+setwd()
+#your code comes in here
+
+
+#############################################################################################
 ##  A non-technical primer for conducting a meta-analysis to synthesize correlational data ##
 #############################################################################################
 
@@ -177,3 +182,4 @@ print(mes_ss)
 
 # The output confirms that there were 16 effect sizes from 14 studies. Analysis indicates a statistically significant point estimate [0.15; 95% CI (0.08, 0.22), p = 0.001]. 
 
+sink(ROutput.txt)
